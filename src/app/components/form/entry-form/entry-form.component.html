@@ -1,0 +1,9 @@
+<div style="background-color: darkgray; display: block; width: 200px;">
+    <form (submit)="add()" [formGroup]="newEntry">
+        <label for="title">Title:</label>
+        <input type="text" formControlName="title" name="title" autofocus id="title">
+        <label for="descr">Problem Description:</label>
+        <textarea formControlName="descr" name="descr"></textarea>
+        <input type="submit">
+    </form>
+</div>

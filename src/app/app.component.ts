@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { EntryServiceService } from './services/entry-service.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'testPrep';
+
+  constructor(public service: EntryServiceService) {}
 }
