@@ -1,3 +1,4 @@
+import { input } from '@angular/core';
 import { Component, Input } from '@angular/core';
 
 @Component({
@@ -6,6 +7,6 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./entry-item.component.css']
 })
 export class EntryItemComponent {
-  @Input('title') title: string | undefined;
-  @Input('descr') descr: string | undefined;
+  title = input.required<string>();
+  descr = input.required<string>();
 }
