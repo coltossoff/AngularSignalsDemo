@@ -15,9 +15,20 @@ app-root {
     grid-template-rows: auto, auto, 1fr;
 }
 
-.cell {
-
+.list {
+    overflow: scroll;
 }
 summary {
-    font-weight: bolder;   
+    font-weight: bolder;
+    width: 100%;
+    background: linear-gradient(to right, #333, #666 75%, #999 90%);
+    padding: .2em;
+    margin-bottom: 5px;
+}
+
+details p {
+    margin-left: 1em;
+    background: linear-gradient(217deg, #333, #111 50.71%),
+            linear-gradient(127deg, #333, #111 50.71%),
+            linear-gradient(336deg, #333, #111 50.71%);
 }
