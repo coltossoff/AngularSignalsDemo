@@ -5,7 +5,7 @@ import { Entry } from '../models/entry';
   providedIn: 'root'
 })
 export class EntryServiceService {
-  entries = signal<Entry[]>([{
+  private entryList = signal<Entry[]>([{
     title: "Hello",
     descr: "World"
   }, {
@@ -13,10 +13,12 @@ export class EntryServiceService {
     descr: "To the interview"
   }]);
 
+  readonly entries = this.entryList.asReadonly();
+
   constructor() { }
 
   push (e: Entry) {
-    this.entries.update(v => [...v, e])
+    this.entryList.update(v => [...v, e])
   }
 
 }
