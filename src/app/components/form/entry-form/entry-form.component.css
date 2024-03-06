@@ -1,0 +1,27 @@
+form {
+    display: grid;
+    padding-top: -10px;
+}
+
+textarea {
+    height: 5rem;
+    box-shadow: inset 5em 1em darkgray;
+    filter: drop-shadow(5px 5px darkgray)
+}
+
+input {
+    filter: drop-shadow(5px 5px darkgray)
+}
+
+.submit {
+    float: right;
+    width: 33%;
+}
+
+label {
+    margin-top: 15px;
+}
+
+span.row {
+    margin-top: 15px;
+}
