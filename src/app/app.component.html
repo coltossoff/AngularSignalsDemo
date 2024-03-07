@@ -1,20 +1,11 @@
 <div class="container">
-        <div class="row">
-                <div class="column"></div>
-                <div class="column"><router-outlet></router-outlet></div>
-                <div class="column"></div>
-        </div>
-        <div class="row">
-                <div class="column"></div>
-                <div class="column"><app-entry-form></app-entry-form></div>
-                <div class="column"></div>
-        </div>
-        <div class="row">
-                <div class="column"></div>
-                <div class="column list">
+        <div class="column"></div>
+        <div class="column">
+                <app-entry-form></app-entry-form>
+                <div class="list">
                         <app-entry-item *ngFor="let e of service.entries()" [title]="e.title"
                                 [descr]="e.descr"></app-entry-item>
                 </div>
-                <div class="column"></div>
         </div>
+        <div class="column"></div>
 </div>

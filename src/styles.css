@@ -3,19 +3,33 @@ html {
     color-scheme: dark;
 }
 
-app-root {
-    border-color: red;
-    border-width: 5px;
+body {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+header {
+    background-color: #333;
+    padding-left: 2em;
+}
+
+footer {
+    background-color: #333;
+    padding: 1em;
 }
 
 .container {
-    min-height: 100dvh;
     display: grid;
-    grid-template-columns: auto, 2fr auto;
-    grid-template-rows: auto, auto, 1fr;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: auto, 1fr;
+    /* row-gap: 20px; */
+    position: relative;
 }
 
 .list {
+    margin-top: 1em;
     overflow: scroll;
 }
 summary {
