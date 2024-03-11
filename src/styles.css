@@ -6,7 +6,7 @@ html {
 body {
     display: grid;
     grid-template-rows: auto 1fr auto;
-    min-height: 100vh;
+    height: 100vh;
     overflow: hidden;
 }
 
@@ -22,17 +22,27 @@ footer {
 
 .container {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    grid-template-rows: auto, 1fr;
-    /* row-gap: 20px; */
+    grid-template-columns: 1fr 2fr;
+    /* grid-template-rows: auto 1fr; */
+    gap: 1em;
     position: relative;
+    height: 100%;
+}
+
+.column {
+    position: relative;
+    height: 100%;
 }
 
 .list {
-    margin-top: 1em;
-    overflow: scroll;
+    /* margin-top: 1em; */
+    height: 100%;
+    display: fixed;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
-summary {
+
+details summary {
     font-weight: bolder;
     width: 100%;
     background: linear-gradient(to right, #333, #666 75%, #999 90%);
