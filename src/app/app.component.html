@@ -1,13 +1,9 @@
 <div class="container">
-        <!-- <div class="column"></div> -->
         <div class="column">
-                <div><app-entry-form>Enter Your Issue Here</app-entry-form></div>
+                <app-entry-form>Enter Your Issue Here</app-entry-form>
         </div>
-        <!-- <div class="column"></div>
-        <div class="column"></div> -->
         <div class="list">
                 <app-entry-item *ngFor="let e of service.entries()" [title]="e.title"
                         [descr]="e.descr"></app-entry-item>
         </div>
-        <!-- <div class="column"></div> -->
 </div>
