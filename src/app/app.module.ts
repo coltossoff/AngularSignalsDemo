@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration, withHttpTransferCacheOptions } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,7 +20,9 @@ import { EntryItemComponent } from './components/entry-item/entry-item.component
     ReactiveFormsModule
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(withHttpTransferCacheOptions({
+      includePostRequests: true
+    }))
   ],
   bootstrap: [AppComponent]
 })
