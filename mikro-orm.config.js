@@ -7,5 +7,7 @@ export default defineConfig({
     debug: true,
     metadataProvider: TsMorphMetadataProvider,
     dbName: 'issueBoard.db',
+    extensions: [EntityGenerator, Migrator]
+
     // highlighter: new SqlHighlighter(),
 })
