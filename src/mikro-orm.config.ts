@@ -1,6 +1,5 @@
 import { Options, SqliteDriver } from '@mikro-orm/sqlite';
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
-import { EntityGenerator } from '@mikro-orm/entity-generator';
 import { Migrator } from '@mikro-orm/migrations';
 
 const config: Options = {
@@ -10,7 +9,7 @@ const config: Options = {
   entitiesTs: ['**/*.entity.ts'],
   metadataProvider: TsMorphMetadataProvider,
   debug: true,
-  extensions: [EntityGenerator, Migrator]
+  extensions: [Migrator]
 };
 
 export default config;

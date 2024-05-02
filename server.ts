@@ -6,9 +6,21 @@ import * as express from 'express';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import AppServerModule from './src/main.server';
+import { EntryEntity } from 'src/app/server/entities/entry.entity';
+import config from './src/mikro-orm.config';
+import { EntityManager, EntityRepository, MikroORM } from '@mikro-orm/sqlite';
 
+export const di = {} as {
+  orm: MikroORM,
+  em: EntityManager,
+  entries: EntityRepository<EntryEntity>
+}
 // The Express app is exported so that it can be used by serverless Functions.
-export function app(): express.Express {
+export async function app(): Promise<express.Express> {
+  di.orm = await new MikroORM(config);
+  di.em = di.orm.em;
+  di.entries = di.em.getRepository(EntryEntity);
+
   const server = express.default();
   const distFolder = join(process.cwd(), 'dist/testPrep/browser');
   const indexHtml = existsSync(join(distFolder, 'index.original.html'))
@@ -26,9 +38,12 @@ export function app(): express.Express {
 
   server.get('/hello', (req, res, next) => res.send('Hello World'));
 
-  server.get('*.*', express.static(distFolder, {
-    maxAge: '1y'
-  }));
+  server.get(
+    '*.*',
+    express.static(distFolder, {
+      maxAge: '1y',
+    })
+  );
 
   // All regular routes use the Angular engine
   server.get('*', (req, res, next) => {
@@ -46,15 +61,14 @@ export function app(): express.Express {
       .catch((err) => next(err));
   });
 
-
   return server;
 }
 
-function run(): void {
+async function run(): Promise<void> {
   const port = process.env['PORT'] || 4000;
 
   // Start up the Node server
-  const server = app();
+  const server = await app();
   server.listen(port, () => {
     console.log(`Node Express server listening on http://localhost:${port}`);
   });
@@ -65,7 +79,7 @@ function run(): void {
 // The below code is to ensure that the server is run only when not requiring the bundle.
 declare const __non_webpack_require__: NodeRequire;
 const mainModule = __non_webpack_require__.main;
-const moduleFilename = mainModule && mainModule.filename || '';
+const moduleFilename = (mainModule && mainModule.filename) || '';
 if (moduleFilename === __filename || moduleFilename.includes('iisnode')) {
   run();
 }
