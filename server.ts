@@ -15,9 +15,18 @@ export const di = {} as {
   em: EntityManager,
   entries: EntityRepository<EntryEntity>
 }
+
+const dummyList = [{
+  title: "Hello",
+  descr: "Welcome to my demorific DEMO!!!"
+}, {
+  title: "Welcome",
+  descr: "To the interviewer"
+}];
+
 // The Express app is exported so that it can be used by serverless Functions.
 export async function app(): Promise<express.Express> {
-  di.orm = await new MikroORM(config);
+  di.orm = await MikroORM.init(config);
   di.em = di.orm.em;
   di.entries = di.em.getRepository(EntryEntity);
 
@@ -37,6 +46,26 @@ export async function app(): Promise<express.Express> {
   // Serve static files from /browser
 
   server.get('/hello', (req, res, next) => res.send('Hello World'));
+
+  server.get('/entries', (req, res, next) => {
+    try {
+      console.log('getting...')
+      res.json(dummyList);
+    } catch (error: any) {
+      res.status(500).json({error: error.message})
+    }
+  });
+
+  server.post('/entry', (req: express.Request, res: express.Response, next) => {
+    try {
+      let body = req.body;
+      console.log(req)
+      dummyList.push(JSON.parse(body));
+      console.log(dummyList)
+    } catch (error: any) {
+      res.status(500).json({error: error.message})
+    }
+  });
 
   server.get(
     '*.*',
