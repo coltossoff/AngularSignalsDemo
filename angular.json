@@ -95,6 +95,7 @@
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
+            "externalDependencies": ["sqlite3"],
             "outputPath": "dist/testPrep/server",
             "main": "server.ts",
             "tsConfig": "tsconfig.server.json"
