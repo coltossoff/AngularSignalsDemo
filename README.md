@@ -1,4 +1,4 @@
-# Angular 17 SSR with Mikro Orm Demo
+# Angular 17 SSR with SQLite Demo
 
 ![screen shot](readme-screenshot.png)
 
