@@ -2,11 +2,12 @@ import 'zone.js/node';
 
 import { APP_BASE_HREF } from '@angular/common';
 import { CommonEngine } from '@angular/ssr';
-import * as express from 'express';
+import e, * as express from 'express';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import AppServerModule from './src/main.server';
 import { Database } from 'sqlite3';
+import { Entry } from 'src/app/models/entry';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export async function app(): Promise<express.Express> {
@@ -21,7 +22,46 @@ export async function app(): Promise<express.Express> {
   server.set('view engine', 'html');
   server.set('views', distFolder);
 
-  new Database('./sqlite.db')
+  const db = new Database('./sqlite.db');
+  db.serialize(() => {
+    db.run(`CREATE TABLE IF NOT EXISTS Entries (
+                _id INTEGER PRIMARY KEY,
+                title TEXT,
+                descr TEXT,
+                createdAt TEXT
+            );`,
+          (e: Error) => {
+            if (e) return console.error(e.message);
+            console.log('Entries table created');
+          });
+  });
+
+  server.post('/entry', (req, res, next) => {
+    let entry = JSON.parse(req.body);
+    try {
+      const result = db.run(`INSERT INTO entries(title,descr,createdAt) VALUES(?,?,?)`, [entry.title, entry.descr, entry.createdAt], (err) => {
+        if (err) return console.error(err.message, req);
+        console.log("Entry Inserted");
+        console.log(entry);
+      });
+      res.json(result);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Insert Failed");
+    }
+  });
+
+  server.get('/entries', (req, res, next) => {
+    try {
+      const result = db.all('SELECT * FROM Entries ORDER BY _id DESC', (vals) => {
+        console.log(vals);
+        res.json(vals);
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Insert Failed");
+    }
+  });
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });
   // Serve static files from /browser
