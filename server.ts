@@ -19,6 +19,7 @@ export async function app(): Promise<express.Express> {
 
   const commonEngine = new CommonEngine();
 
+  server.use(express.json());
   server.set('view engine', 'html');
   server.set('views', distFolder);
 
@@ -37,23 +38,27 @@ export async function app(): Promise<express.Express> {
   });
 
   server.post('/entry', (req, res, next) => {
-    let entry = JSON.parse(req.body);
+    let entry = req.body;
     try {
-      const result = db.run(`INSERT INTO entries(title,descr,createdAt) VALUES(?,?,?)`, [entry.title, entry.descr, entry.createdAt], (err) => {
-        if (err) return console.error(err.message, req);
-        console.log("Entry Inserted");
-        console.log(entry);
-      });
-      res.json(result);
+      const result = db.run(
+        `INSERT INTO entries(title,descr,createdAt) VALUES(?,?,?)`,
+        [entry.title, entry.descr, entry.createdAt],
+        (err) => {
+          if (err) return console.error(err.message, req);
+          console.log('Entry Inserted');
+        }
+      );
     } catch (error) {
       console.error(error);
-      res.status(500).send("Insert Failed");
+      res.status(500).send('Insert Failed');
     }
   });
 
   server.get('/entries', (req, res, next) => {
+    console.log('entries hit')
     try {
-      const result = db.all('SELECT * FROM Entries ORDER BY _id DESC', (vals) => {
+      db.all('SELECT * FROM entries ORDER BY _id DESC', (e, vals) => {
+        if(e) return console.error(e)
         console.log(vals);
         res.json(vals);
       });

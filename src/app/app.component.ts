@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EntryServiceService } from './services/entry-service.service';
 
 @Component({
@@ -6,8 +6,12 @@ import { EntryServiceService } from './services/entry-service.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'testPrep';
 
   constructor(public service: EntryServiceService) {}
+
+  ngOnInit(): void {
+    this.service.load();
+  }
 }
