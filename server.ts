@@ -94,7 +94,7 @@ export async function app(): Promise<express.Express> {
 }
 
 async function run(): Promise<void> {
-  const port = process.env['PORT'] || 4000;
+  const port = process.env['PORT'] || 80;
 
   // Start up the Node server
   const server = await app();
