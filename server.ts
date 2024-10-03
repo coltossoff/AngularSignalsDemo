@@ -48,6 +48,7 @@ export async function app(): Promise<express.Express> {
           console.log('Entry Inserted');
         }
       );
+      res.status(201).json({});
     } catch (error) {
       console.error(error);
       res.status(500).send('Insert Failed');
